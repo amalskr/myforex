@@ -4,7 +4,7 @@ A sample forex application (exchangeratesapi.io) using Android+MVVM+Retrofit+and
 ## Usage
 Foreign exchange rates API with currency conversion - https://exchangeratesapi.io/ <br/>
 #1 Get the latest foreign exchange reference rates. <br/>
-#2 Get historical rates for any day since 1999. <br/>
+#2 Get historical rates for a day. <br/>
 
 ## Screens
 <p float="left">
