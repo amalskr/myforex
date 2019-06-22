@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">My Forex</string>
+    <string name="base_currency">Base Currency</string>
+    <string name="currency_type">***</string>
+    <string name="history">History</string>
+
+    <string name="server_client_id">192056753064-78kv4lle29ctsqr9g886rq3kl6nhvqud.apps.googleusercontent.com</string>
+
+    <string name="facebook_app_id">644064476110013</string>
+    <string name="fb_login_protocol_scheme">fb644064476110013</string>
+    <string name="myforex">myForex</string>
+    <string name="logout">Logout</string>
+    <string name="search">Search</string>
+
+
+</resources>
