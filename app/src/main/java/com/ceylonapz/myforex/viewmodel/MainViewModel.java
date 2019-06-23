@@ -1,24 +1,23 @@
 package com.ceylonapz.myforex.viewmodel;
 
-import android.app.Activity;
+import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.ceylonapz.myforex.R;
 import com.ceylonapz.myforex.model.ExchangeRate;
 import com.ceylonapz.myforex.model.ForexRate;
-import com.ceylonapz.myforex.util.adapters.RateAdapter;
 import com.ceylonapz.myforex.util.interfaces.StatusInterface;
 import com.ceylonapz.myforex.util.services.ForexApi;
+import com.ceylonapz.myforex.view.adapters.RateAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class MainViewModel extends ViewModel {
@@ -28,10 +27,10 @@ public class MainViewModel extends ViewModel {
     private RateAdapter adapter;
     private ForexRate forexRate;
 
-    public void init(@NonNull Activity activity) {
+    public void init() {
         adapter = new RateAdapter();
         mainProgress = new ObservableInt(View.GONE);
-        baseCurrency = new ObservableField<>(activity.getString(R.string.currency_type));
+        baseCurrency = new ObservableField<>();
 
         callApi();
     }
@@ -59,30 +58,16 @@ public class MainViewModel extends ViewModel {
             @Override
             public void fail(String message) {
                 stopProgressView();
-                System.out.println("latestForexJobj e " + message);
+                Log.e("MAIN-CallApi", message);
 
             }
         });
-
-
-        /*forexApi.getHistorical("2019-01-31", new StatusInterface() {
-            @Override
-            public void success(JsonObject jsonObject) {
-                System.out.println("latestForexJobj HIS " + jsonObject.toString());
-            }
-
-            @Override
-            public void fail(String message) {
-                System.out.println("latestForexJobj HIS e " + message);
-            }
-        });*/
     }
 
 
     private void setupExchangeList(ForexRate.RatesBean ratesBean) {
 
         List<ExchangeRate> exRateList = new ArrayList<>();
-
         exRateList.add(new ExchangeRate("AUD", ratesBean.getAUD()));
         exRateList.add(new ExchangeRate("BGN", ratesBean.getBGN()));
         exRateList.add(new ExchangeRate("CAD", ratesBean.getCAD()));
@@ -97,6 +82,9 @@ public class MainViewModel extends ViewModel {
         exRateList.add(new ExchangeRate("TRY", ratesBean.getTRY()));
         exRateList.add(new ExchangeRate("USD", ratesBean.getUSD()));
         exRateList.add(new ExchangeRate("ZAR", ratesBean.getZAR()));
+
+        MutableLiveData<List<ExchangeRate>> liveDataExRateList = new MutableLiveData<>();
+        liveDataExRateList.postValue(exRateList);
 
         stopProgressView();
 

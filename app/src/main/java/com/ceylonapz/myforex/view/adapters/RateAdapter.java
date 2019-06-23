@@ -1,4 +1,4 @@
-package com.ceylonapz.myforex.util.adapters;
+package com.ceylonapz.myforex.view.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

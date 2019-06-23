@@ -1,4 +1,4 @@
-package com.ceylonapz.myforex.view;
+package com.ceylonapz.myforex.view.ui;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -27,9 +27,8 @@ public class HistoryActivity extends AppCompatActivity {
         ActivityHistoryBinding historyBinding = DataBindingUtil.setContentView(this, R.layout.activity_history);
 
         HistoryViewModel historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
-
         if (savedInstanceState == null) {
-            historyViewModel.init(this);
+            historyViewModel.init();
         }
         historyBinding.setHistoryVm(historyViewModel);
     }

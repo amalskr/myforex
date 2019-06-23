@@ -1,18 +1,19 @@
 package com.ceylonapz.myforex.viewmodel;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
-import com.ceylonapz.myforex.R;
 import com.ceylonapz.myforex.model.ExchangeRate;
 import com.ceylonapz.myforex.model.ForexRate;
-import com.ceylonapz.myforex.util.adapters.RateAdapter;
 import com.ceylonapz.myforex.util.interfaces.StatusInterface;
 import com.ceylonapz.myforex.util.services.ForexApi;
+import com.ceylonapz.myforex.view.adapters.RateAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -22,9 +23,9 @@ import java.util.Calendar;
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.AndroidViewModel;
 
-public class HistoryViewModel extends ViewModel {
+public class HistoryViewModel extends AndroidViewModel {
 
     public ObservableField<String> baseCurrency;
     public ObservableInt historyProgress;
@@ -32,22 +33,26 @@ public class HistoryViewModel extends ViewModel {
     private ForexRate forexRate;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private Calendar myCalendar;
-    private Activity activity;
+    private Context context;
     public ObservableField<String> datetext;
     private ArrayList<ExchangeRate> exRateList;
 
-    public void init(@NonNull Activity activity) {
-        this.activity = activity;
+    public HistoryViewModel(@NonNull Application application) {
+        super(application);
+        context = application.getApplicationContext();
+    }
+
+    public void init() {
         setupDatePicker();
         adapter = new RateAdapter();
         historyProgress = new ObservableInt(View.GONE);
-        baseCurrency = new ObservableField<>(activity.getString(R.string.currency_type));
+        baseCurrency = new ObservableField<>();
         datetext = new ObservableField<>("Select a date");
     }
 
     /*Date Picker*/
-    public void openDatePicker() {
-        DatePickerDialog datePicker = new DatePickerDialog(activity, dateSetListener, myCalendar
+    public void openDatePicker(View view) {
+        DatePickerDialog datePicker = new DatePickerDialog(view.getContext(), dateSetListener, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH));
         datePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
@@ -83,7 +88,7 @@ public class HistoryViewModel extends ViewModel {
             resetAdapter();
             callApi(dateText);
         } else {
-            Toast.makeText(activity, "Please select a date", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Please select a date", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -149,7 +154,7 @@ public class HistoryViewModel extends ViewModel {
             adapter.setItemList(exRateList);
             adapter.notifyDataSetChanged();
         } else {
-            Toast.makeText(activity, "No Results...!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "No Results...!", Toast.LENGTH_SHORT).show();
         }
 
     }

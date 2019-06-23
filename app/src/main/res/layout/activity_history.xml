@@ -16,7 +16,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.HistoryActivity">
+        tools:context=".view.ui.HistoryActivity">
 
         <LinearLayout
             android:id="@+id/topView"
@@ -44,7 +44,8 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:windowSoftInputMode="stateAlwaysHidden"
-                    android:onClick="@{() -> historyVm.openDatePicker()}"
+
+                    android:onClick="@{historyVm::openDatePicker}"
                     android:text="@{historyVm.datetext}" />
 
                 <Button

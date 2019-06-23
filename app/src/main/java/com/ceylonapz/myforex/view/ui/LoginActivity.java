@@ -1,4 +1,4 @@
-package com.ceylonapz.myforex.view;
+package com.ceylonapz.myforex.view.ui;
 
 import android.content.Intent;
 import android.os.Bundle;

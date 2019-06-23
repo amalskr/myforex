@@ -1,4 +1,4 @@
-package com.ceylonapz.myforex.view;
+package com.ceylonapz.myforex.view.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         if (savedInstanceState == null) {
-            mainViewModel.init(this);
+            mainViewModel.init();
         }
         mainBinding.setMainVm(mainViewModel);
     }
